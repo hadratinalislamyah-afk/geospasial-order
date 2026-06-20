@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout Pesanan</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#0d1117;
+    color:white;
+    padding:30px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#141b27;
+    padding:30px;
+    border-radius:12px;
+}
+
+h1{
+    color:#f59e0b;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:5px;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#1a2236;
+    color:white;
+}
+
+textarea{
+    min-height:100px;
+}
+
+.ringkasan{
+    background:#1a2236;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.total{
+    margin-top:10px;
+    color:#f59e0b;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.btn{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    background:#f59e0b;
+    border:none;
+    border-radius:8px;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#d97706;
+}
+
+.kembali{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    color:#aaa;
+    text-decoration:none;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Checkout Pesanan</h1>
+
+<div class="ringkasan">
+    <h3>Ringkasan Pesanan</h3>
+
+    <div id="produk"></div>
+
+    <div class="total" id="total"></div>
+</div>
+
+<label>Nama Lengkap</label>
+<input type="text" id="nama">
+
+<label>Nomor WhatsApp</label>
+<input type="text" id="wa">
+
+<label>Alamat Pengiriman</label>
+<textarea id="alamat"></textarea>
+
+<button class="btn" onclick="kirimWA()">
+Pesan via WhatsApp
+</button>
+
+<a href="keranjang.html" class="kembali">
+← Kembali ke Keranjang
+</a>
+
+</div>
+
+<script>
+
+let keranjang =
+JSON.parse(localStorage.getItem("keranjang")) || [];
+
+let html = "";
+let total = 0;
+
+keranjang.forEach(item=>{
+
+html += `
+<p>
+${item.nama}
+- Rp ${item.harga.toLocaleString('id-ID')}
+</p>
+`;
+
+total += item.harga;
+
+});
+
+document.getElementById("produk").innerHTML = html;
+
+document.getElementById("total").innerHTML =
+"Total Belanja : Rp " +
+total.toLocaleString('id-ID');
+
+function kirimWA(){
+
+let nama =
+document.getElementById("nama").value;
+
+let wa =
+document.getElementById("wa").value;
+
+let alamat =
+document.getElementById("alamat").value;
+
+let pesan =
+`Halo Geospasial Order
+
+Nama : ${nama}
+No WA : ${wa}
+Alamat : ${alamat}
+
+Produk yang dipesan:
+`;
+
+keranjang.forEach(item=>{
+
+pesan +=
+`${item.nama} - Rp ${item.harga.toLocaleString('id-ID')}
+`;
+
+});
+
+pesan += `
+Total Belanja :
+Rp ${total.toLocaleString('id-ID')}
+`;
+
+window.open(
+`https://wa.me/6282215976856?text=${encodeURIComponent(pesan)}`,
+'_blank'
+);
+
+}
+</script>
+
+</body>
+</html>

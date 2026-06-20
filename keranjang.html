@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keranjang Belanja</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#0d1117;
+    color:white;
+    padding:30px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+h1{
+    color:#f59e0b;
+    margin-bottom:25px;
+}
+
+.item{
+    background:#141b27;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.nama{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.harga{
+    color:#f59e0b;
+    margin-top:5px;
+}
+
+button{
+    background:red;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:0.8;
+}
+
+.total{
+    margin-top:20px;
+    font-size:24px;
+    font-weight:bold;
+    color:#f59e0b;
+}
+
+.checkout-btn{
+    display:inline-block;
+    margin-top:20px;
+    background:#f59e0b;
+    color:black;
+    text-decoration:none;
+    padding:12px 25px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.checkout-btn:hover{
+    background:#d97706;
+}
+
+.kosong{
+    text-align:center;
+    color:#999;
+    margin-top:30px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>🛒 Keranjang Belanja</h1>
+
+<div id="daftarProduk"></div>
+
+<div class="total" id="totalHarga"></div>
+
+<a href="checkout.html" class="checkout-btn">
+Checkout
+</a>
+
+</div>
+
+<script>
+
+let keranjang =
+JSON.parse(localStorage.getItem("keranjang")) || [];
+
+let daftarProduk =
+document.getElementById("daftarProduk");
+
+let totalHarga =
+document.getElementById("totalHarga");
+
+if(keranjang.length === 0){
+
+daftarProduk.innerHTML =
+'<p class="kosong">Keranjang masih kosong.</p>';
+
+document.querySelector('.checkout-btn').style.display='none';
+
+}else{
+
+let html = '';
+let total = 0;
+
+keranjang.forEach((item,index)=>{
+
+html += `
+<div class="item">
+
+<div>
+<div class="nama">${item.nama}</div>
+<div class="harga">
+Rp ${item.harga.toLocaleString('id-ID')}
+</div>
+</div>
+
+<button onclick="hapusProduk(${index})">
+Hapus
+</button>
+
+</div>
+`;
+
+total += item.harga;
+
+});
+
+daftarProduk.innerHTML = html;
+
+totalHarga.innerHTML =
+"Total Belanja : Rp " +
+total.toLocaleString('id-ID');
+
+}
+
+function hapusProduk(index){
+
+let keranjang =
+JSON.parse(localStorage.getItem("keranjang")) || [];
+
+keranjang.splice(index,1);
+
+localStorage.setItem(
+"keranjang",
+JSON.stringify(keranjang)
+);
+
+location.reload();
+
+}
+
+</script>
+
+</body>
+</html>

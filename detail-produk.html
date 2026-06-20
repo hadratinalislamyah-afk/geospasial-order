@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detail Produk - Geospasial Order</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#0d1117;
+    color:white;
+    margin:0;
+}
+
+header{
+    background:#141b27;
+    padding:15px 30px;
+}
+
+header a{
+    color:#f59e0b;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:40px 20px;
+    display:flex;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+.gambar{
+    flex:1;
+    min-width:300px;
+}
+
+.gambar img{
+    width:100%;
+    border-radius:12px;
+}
+
+.info{
+    flex:1;
+    min-width:300px;
+}
+
+h1{
+    margin-bottom:15px;
+}
+
+.price{
+    font-size:32px;
+    color:#f59e0b;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.desc{
+    color:#cbd5e1;
+    line-height:1.8;
+    margin-bottom:25px;
+}
+
+button{
+    background:#f59e0b;
+    color:black;
+    border:none;
+    padding:12px 25px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+    <a href="index (2).html">← Kembali ke Beranda</a>
+</header>
+
+<div class="container">
+
+    <div class="gambar">
+        <img id="gambar">
+    </div>
+
+    <div class="info">
+
+        <h1 id="nama"></h1>
+
+        <div class="price" id="harga"></div>
+
+        <div class="desc" id="deskripsi"></div>
+
+        <button onclick="tambahKeranjang()">
+            🛒 Tambah ke Keranjang
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+const produk = {
+
+1:{
+nama:"GPS Garmin GPSMAP 64sx",
+harga:6500000,
+gambar:"images/gpsmap-64sx-image-01.webp",
+deskripsi:"GPS handheld profesional dengan peta topografi bawaan."
+},
+
+2:{
+nama:"Total Station Topcon GM-55",
+harga:75000000,
+gambar:"images/Total-Station-TOPCON-GM55.jpg",
+deskripsi:"Total Station presisi tinggi untuk konstruksi dan pemetaan."
+},
+
+3:{
+nama:"Drone UAV Mapping",
+harga:15000000,
+gambar:"images/images.jpeg",
+deskripsi:"Drone pemetaan udara resolusi tinggi."
+},
+
+4:{
+nama:"Theodolit Digital Topcon DT-305L",
+harga:18500000,
+gambar:"images/theodolite-digital-topcon-DT-305L.jpg",
+deskripsi:"Theodolit digital akurasi tinggi."
+},
+
+5:{
+nama:"Waterpass Sokkia B40A",
+harga:8500000,
+gambar:"images/Automatic-Level-Waterpass-Sokkia-B40A-Contoh-Gambar.jpg",
+deskripsi:"Automatic level untuk pekerjaan leveling."
+},
+
+6:{
+nama:"GPS Geodetik RTK Trimble R2",
+harga:120000000,
+gambar:"images/images (1).jpeg",
+deskripsi:"GPS geodetik RTK presisi tinggi."
+},
+
+7:{
+nama:"Meteran Laser Leica DISTO D2",
+harga:3200000,
+gambar:"images/pkP106249920-1.avif",
+deskripsi:"Meteran laser hingga 100 meter."
+},
+
+8:{
+nama:"Prisma & Aksesoris Total Station",
+harga:1800000,
+gambar:"images/Mini-Prisma-2.jpg",
+deskripsi:"Prisma survei kompatibel berbagai merek."
+},
+
+9:{
+nama:"Tripod Aluminium Heavy Duty",
+harga:950000,
+gambar:"images/duty aluminum tripod.jpeg",
+deskripsi:"Tripod aluminium kokoh dan ringan."
+},
+
+10:{
+nama:"Rambu Ukur 4 Meter",
+harga:450000,
+gambar:"images/Rambu-Ukur-Jadi-2.jpg",
+deskripsi:"Rambu ukur fiberglass 4 meter."
+},
+
+11:{
+nama:"Drone LiDAR DJI Zenmuse L2",
+harga:280000000,
+gambar:"images/DJI-Zenmuse-L2-Lidar-02.jpg",
+deskripsi:"Drone LiDAR profesional untuk pemetaan."
+},
+
+12:{
+nama:"Software ArcGIS Pro",
+harga:12000000,
+gambar:"images/images (2).jpeg",
+deskripsi:"Software GIS profesional."
+},
+
+13:{
+nama:"Receiver GNSS RTK South Galaxy G1 Plus",
+harga:85000000,
+gambar:"images/South-G1-Plus-Rover-Base-Set-GPS-Geodetik.jpeg",
+deskripsi:"Receiver GNSS RTK dual frekuensi."
+}
+
+};
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+const item = produk[id];
+
+document.getElementById("nama").innerText = item.nama;
+
+document.getElementById("harga").innerText =
+"Rp " + item.harga.toLocaleString("id-ID");
+
+document.getElementById("gambar").src =
+item.gambar;
+
+document.getElementById("deskripsi").innerText =
+item.deskripsi;
+
+function tambahKeranjang(){
+
+let keranjang =
+JSON.parse(localStorage.getItem("keranjang")) || [];
+
+keranjang.push(item);
+
+localStorage.setItem(
+"keranjang",
+JSON.stringify(keranjang)
+);
+
+alert("Produk berhasil ditambahkan ke keranjang!");
+
+}
+
+</script>
+
+</body>
+</html>
